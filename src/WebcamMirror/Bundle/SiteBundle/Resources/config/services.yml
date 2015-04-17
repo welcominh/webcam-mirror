@@ -1,0 +1,4 @@
+services:
+#    webcam_mirror_site.example:
+#        class: WebcamMirror\Bundle\SiteBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
