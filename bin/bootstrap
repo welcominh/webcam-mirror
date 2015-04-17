@@ -1,0 +1,34 @@
+#!/bin/bash
+
+env='dev'
+recreate_bdd=false
+
+for var in "$@"
+do
+	if [ "$var" == 'prod' ]; then
+		env=prod;
+	fi
+	if [ "$var" == '--recreate-bdd' ]; then
+		recreate_bdd=true;
+	fi
+done
+
+composer install --dev
+
+if [ "$recreate_bdd" == true ]
+then
+	php app/console doctrine:database:drop --force --env=$env
+	php app/console doctrine:database:create --env=$env &&
+	php app/console doctrine:schema:create --env=$env
+	php app/console indexFullTextMega
+fi
+
+php app/console assets:install --symlink
+php app/console assetic:dump
+
+if [ -d "app/cache" ]
+then
+    php app/console cache:clear --env=prod
+    php app/console cache:clear --env=dev
+    echo Vidage du cache
+fi
