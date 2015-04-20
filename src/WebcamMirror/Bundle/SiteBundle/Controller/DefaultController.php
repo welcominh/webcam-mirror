@@ -32,12 +32,23 @@ class DefaultController extends Controller
                         )
                     )
                 ;
-                $this->get('mailer')->send($message);
 
-                $this->get('session')->getFlashBag()->add(
-                    'contact_sent',
-                    'Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais.'
-                );
+                if($form->get('antibot')->getData() != 7) {
+
+                    $this->get('session')->getFlashBag()->add(
+                        'contact_sent',
+                        'Erreur ! Robot détécté. Message non envoyé !'
+                    );
+
+                } else {
+
+                    $this->get('mailer')->send($message);
+
+                    $this->get('session')->getFlashBag()->add(
+                        'contact_sent',
+                        'Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais.'
+                    );
+                }
                 return $this->redirect($this->generateUrl('homepage'));
             }
         }
