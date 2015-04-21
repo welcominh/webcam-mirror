@@ -1,4 +1,4 @@
-direct-download-deployer
+How to deploy
 ========================
 Prerequisites
 ------------------------
