@@ -30,7 +30,7 @@ role :web, %w{root@5.135.167.2}
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-set :stage_folder, 'production'
+set :stage_folder, 'prod'
 set :deploy_to, "#{fetch(:deploy_to_root)}/#{fetch(:stage_folder)}"
 
 
