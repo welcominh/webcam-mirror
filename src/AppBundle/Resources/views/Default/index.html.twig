@@ -1,0 +1,85 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block body %}
+    <div id="logo">
+        <a href="/">
+            <img src="{{ asset('bundles/app/images/nom_site.png') }}" alt="Webcam-mirror.com" class="no_border" />
+        </a><br />
+        <br />
+        <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.webcam-mirror.com&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>
+    </div>
+
+    <div id="container">
+        <div class="webcam">
+            <object type="application/x-shockwave-flash" width="640" height="480" data="{{ asset('miroir.swf') }}">
+                <param name="movie" value="{{ asset('miroir.swf') }}" />
+            </object>
+
+            <div id="footer">
+                {% raw %}
+                <script type="text/javascript">
+                    function displayContact()
+                    {
+                        if(document.getElementById('form_contact').style.display != 'block')
+                            document.getElementById('form_contact').style.display = 'block';
+                        else
+                            document.getElementById('form_contact').style.display = 'none';
+
+                        return false;
+                    }
+                </script>
+                {% endraw %}
+
+                <a href="#form_contact" style="font-weight:bold; font-size:14px; font-style:italic;" onclick="return displayContact();">Contact</a><br />
+                {% for flashMessage in app.session.flashbag.get('contact_sent') %}
+                    <p class="italic" style="color:#0000ff;">
+                        {{ flashMessage }}
+                    </p>
+                {% endfor %}
+                <form method="post" action="{{ path('homepage') }}" id="form_contact" class="display_none">
+                    <table class="bloc_centre margin_top_20 margin_bottom_20">
+                        <tr width="200">
+                            <td align="right">{{ form_label(form_contact.antibot, 'Anti-bot') }}</td>
+                            <td align="left">{{ form_widget(form_contact.antibot) }}</td>
+                        </tr>
+                        <tr>
+                            <td align="right">{{ form_label(form_contact.email, 'Votre email') }}</td>
+                            <td align="left">{{ form_widget(form_contact.email) }}</td>
+                        </tr>
+                        <tr>
+                            <td align="right">{{ form_label(form_contact.subject, 'Sujet') }}</td>
+                            <td align="left">{{ form_widget(form_contact.subject) }}</td>
+                        </tr>
+                        <tr>
+                            <td valign="top" align="right">{{ form_label(form_contact.message, 'Message') }}</td>
+                            <td align="right">
+                                {{ form_widget(form_contact.message) }}<br /><br />
+                                {{ form_rest(form_contact) }}
+                                <input type="submit" value="Envoyer" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+                <br />
+                Copyright © {{ "now"|date("Y") }} - Webcam-Mirror ® - Tous droits réservés <br />
+            </div>
+
+            <div id="presentation">
+                Webcam-mirror vous propose un miroir d'appoint pour tout type d'usage si vous ne possédez pas une glace à portée de main :
+                <ul>
+                    <li>Se recoiffer</li>
+                    <li>Se repoudrer le nez (pour les filles)</li>
+                    <li>Vérifier si on est présentable avant un rendez-vous quelconque</li>
+                    <li>Vérifier que la webcam est bien détectée par votre PC</li>
+                    <li>Vérifier que Flash est bien installée sur votre PC</li>
+                    <li>etc...</li>
+                </ul>
+            </div>
+        </div>
+        <div class="pub">
+            <!-- Pub -->
+        </div>
+        <div style="clear:both"></div>
+    </div>
+{% endblock %}

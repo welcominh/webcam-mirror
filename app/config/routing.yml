@@ -1,3 +1,3 @@
 webcam_mirror_site:
-    resource: "@WebcamMirrorSiteBundle/Resources/config/routing.yml"
+    resource: "@AppBundle/Resources/config/routing.yml"
     prefix:   /
